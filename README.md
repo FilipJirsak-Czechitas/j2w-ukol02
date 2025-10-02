@@ -42,8 +42,8 @@ private static List<String> readAllLines(String resource) {
              BufferedReader reader = new BufferedReader(inputStreamReader)
      ){
          return reader
-                 .lines()                                // Metoda lines() vrací stream řádků ze souboru.
-                 .collect(Collectors.toList());  // Pomocí kolektoru převedeme Stream<String> na List<String>.
+            .lines()                        // Metoda lines() vrací stream řádků ze souboru.
+            .collect(Collectors.toList());  // Pomocí kolektoru převedeme Stream<String> na List<String>.
      } catch (IOException e) {
          throw new RuntimeException("Nepodařilo se načíst soubor " + resource, e);
      }
