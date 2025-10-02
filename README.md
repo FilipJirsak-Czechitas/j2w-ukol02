@@ -30,23 +30,24 @@ Pro generování náhodných čísel v Javě slouží třída [Random](https://d
 Kód pro načtení řádků souboru v *resourcech* do seznamu řetězců (`List<String>`):
 
 ```java
-private static List<String> readAllLines(String resource) throws IOException{
-   //Soubory z resources se získávají pomocí classloaderu. Nejprve musíme získat aktuální classloader.
-   ClassLoader classLoader=Thread.currentThread().getContextClassLoader();
-   
-   //Pomocí metody getResourceAsStream() získáme z classloaderu InpuStream, který čte z příslušného souboru.
-   //Následně InputStream převedeme na BufferedRead, který čte text v kódování UTF-8 
-   try(
-      InputStream inputStream = classLoader.getResourceAsStream(resource);
-      InputStreamReader inputStreamReader = new InputStreamReader(inputStream,StandardCharsets.UTF_8);
-      BufferedReader reader = new BufferedReader(inputStreamReader)
-   ){      
-      return reader
-         .lines() // Metoda lines() vrací stream řádků ze souboru. Pomocí kolektoru převedeme Stream<String> na List<String>.
-         .collect(Collectors.toList());
-   }
-}
+private static List<String> readAllLines(String resource) {
+     //Soubory z resources se získávají pomocí classloaderu. Nejprve musíme získat aktuální classloader.
+     ClassLoader classLoader=Thread.currentThread().getContextClassLoader();
 
+     //Pomocí metody getResourceAsStream() získáme z classloaderu InpuStream, který čte z příslušného souboru.
+     //Následně InputStream převedeme na BufferedRead, který čte text v kódování UTF-8
+     try(
+             InputStream inputStream = classLoader.getResourceAsStream(resource);
+             InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+             BufferedReader reader = new BufferedReader(inputStreamReader)
+     ){
+         return reader
+                 .lines()                                // Metoda lines() vrací stream řádků ze souboru.
+                 .collect(Collectors.toList());  // Pomocí kolektoru převedeme Stream<String> na List<String>.
+     } catch (IOException e) {
+         throw new RuntimeException("Nepodařilo se načíst soubor " + resource, e);
+     }
+ }
 // příklad volání: readAllLines("citaty.txt")
 ```
 
